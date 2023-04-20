@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "680447339800",
+    "project_id": "foody-64d87",
+    "storage_bucket": "foody-64d87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680447339800:android:58160a8a483da6911f826d",
+        "android_client_info": {
+          "package_name": "com.android.foody"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "680447339800-j5r00o7spjcova5hopi3pquuj6rf2532.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPgUf5PWxC5eko4vWUyhg8eb18HOh2cVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "680447339800-j5r00o7spjcova5hopi3pquuj6rf2532.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680447339800:android:7235c160d249c8341f826d",
+        "android_client_info": {
+          "package_name": "com.example.appbanhang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "680447339800-j5r00o7spjcova5hopi3pquuj6rf2532.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPgUf5PWxC5eko4vWUyhg8eb18HOh2cVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "680447339800-j5r00o7spjcova5hopi3pquuj6rf2532.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

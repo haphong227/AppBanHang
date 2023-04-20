@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AppBanHang</string>
+    <string-array name="navigation">
+        <item>Food</item>
+        <item>Cart</item>
+        <item>Like</item>
+        <item>Message</item>
+        <item>Information</item>
+    </string-array>
+</resources>
