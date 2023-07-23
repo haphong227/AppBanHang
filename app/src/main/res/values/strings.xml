@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppBanHang</string>
+    <string name="app_name">Foody</string>
     <string-array name="navigation">
         <item>Food</item>
         <item>Cart</item>

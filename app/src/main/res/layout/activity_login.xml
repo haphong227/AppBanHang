@@ -32,9 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/bungeeregular"
             android:lineSpacingMultiplier="1.0"
@@ -67,10 +65,11 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/viewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="320dp">
+                    android:layout_height="380dp">
                 </androidx.viewpager.widget.ViewPager>
                 <LinearLayout
                     android:gravity="center"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                         <ImageView

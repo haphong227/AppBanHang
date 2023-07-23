@@ -1,5 +1,6 @@
 package com.example.appbanhang;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -13,12 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.appbanhang.adapter.Tabadapter;
 import com.example.appbanhang.fragment.FragmentLogin;
 import com.example.appbanhang.fragment.FragmentRegister;
-//import com.example.food.adapter.Tabadapter;
-//import com.example.food.fragment.FragmentLogin;
-//import com.example.food.fragment.FragmentSignup;
 import com.google.android.material.tabs.TabLayout;
-//import com.google.firebase.auth.FirebaseAuth;
-//import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     TabLayout tableLayout;
@@ -35,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         tableLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
 //        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
 //        if(user!=null){
 //            Intent is = new Intent(this, MainActivity.class);
 //            startActivity(is);

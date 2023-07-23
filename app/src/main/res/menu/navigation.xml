@@ -8,10 +8,10 @@
         android:id="@+id/mCart"
         android:title=""
         android:icon="@drawable/icon_cart"/>
-    <item
-        android:id="@+id/mMessage"
-        android:title=""
-        android:icon="@drawable/icon_mesage"/>
+<!--    <item-->
+<!--        android:id="@+id/mMessage"-->
+<!--        android:title=""-->
+<!--        android:icon="@drawable/icon_message"/>-->
     <item
         android:id="@+id/mUser"
         android:title=""

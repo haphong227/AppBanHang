@@ -1,6 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <TextView
+            style="@style/viewParent.headerText"
+            android:text="Settings" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_profile"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/ic_launcher"
+                app:civ_border_color="#6C7136"
+                app:civ_border_width="2dp" />
+
+            <TextView
+                android:id="@+id/tvUsername"
+                style="@style/viewParent.headerText"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@id/img_profile"
+                android:text="Trinh Hang"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                style="@style/viewParent.headerText"
+                android:layout_below="@id/tvUsername"
+                android:layout_toRightOf="@id/img_profile"
+                android:fontFamily="@font/calibri_regular"
+                android:text="trinhang2207@gmail.com"
+                android:textColor="#5D5C5C"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvEditprofile"
+            style="@style/viewParent.headerText.settingsTextIcon"
+            android:drawableLeft="@drawable/ic_edit_profile"
+            android:text="Edit Profile" />
+
+        <TextView
+            android:id="@+id/tvChangepassword"
+            style="@style/viewParent.headerText.settingsTextIcon"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_edit_password"
+            android:text="Change Password" />
+
+        <TextView
+            android:id="@+id/tvHistory"
+            style="@style/viewParent.headerText.settingsTextIcon"
+            android:drawableLeft="@drawable/ic_order_history"
+            android:text="History Order" />
+
+        <TextView
+            android:id="@+id/tvLogout"
+            style="@style/viewParent.headerText.settingsTextIcon"
+            android:drawableLeft="@drawable/ic_logout"
+            android:text="Logout" />
+
+    </LinearLayout>
+</ScrollView>

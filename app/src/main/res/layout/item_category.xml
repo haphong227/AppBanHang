@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/cview"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:id="@+id/cardView"
+    android:layout_width="80dp"
+    android:layout_height="125dp"
     app:cardBackgroundColor="#FFF"
-    android:layout_marginLeft="11dp"
-    android:layout_marginTop="11dp"
-    android:layout_marginBottom="5dp"
+    android:layout_margin="2.5dp"
     app:cardCornerRadius="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img"
-            android:padding="5dp"
-            android:layout_width="68dp"
-            android:layout_height="68dp"
-            android:src="@drawable/trasua"/>
-<!--        <ImageView-->
-<!--            android:id="@+id/img"-->
-<!--            android:layout_width="94dp"-->
-<!--            android:layout_height="68dp"-->
-<!--            android:src="@drawable/trasua"-->
-<!--            android:scaleType="centerCrop"/>-->
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:cardBackgroundColor="#Dddddd"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="100dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img"
+                android:padding="5dp"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:src="@drawable/trasua"/>
+        </androidx.cardview.widget.CardView>
+
 
         <TextView
             android:id="@+id/tvName"
             android:text="Trà Sữa"
-            android:paddingTop="5dp"
+            android:textColor="#000"
+            android:fontFamily="@font/poppinregular"
+            android:layout_marginTop="11dp"
             android:paddingBottom="10dp"
             android:gravity="center"
             android:layout_width="match_parent"

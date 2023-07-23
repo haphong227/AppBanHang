@@ -7,20 +7,31 @@
     android:gravity="center">
     <EditText
         android:layout_width="300dp"
-        android:hint="Enter Email"
+        android:hint="Name"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
+        android:id="@+id/eName"
+        android:paddingBottom="10dp"
+        android:background="@drawable/myattr"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:layout_width="300dp"
+        android:hint="Email"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+
+        android:layout_marginTop="20dp"
         android:id="@+id/eEmail"
         android:paddingBottom="10dp"
         android:background="@drawable/myattr"
         android:layout_height="wrap_content"/>
     <EditText
         android:layout_width="300dp"
-        android:hint="Enter PassWord"
+        android:hint="Password"
         android:paddingLeft="20dp"
         android:id="@+id/ePassword"
-        android:paddingTop="10dp"
         android:layout_marginTop="20dp"
+        android:paddingTop="10dp"
         android:inputType="textPassword"
         android:paddingBottom="10dp"
         android:background="@drawable/myattr"
@@ -28,7 +39,7 @@
         app:passwordToggleEnabled="true"/>
     <EditText
         android:layout_width="300dp"
-        android:hint="Retype PassWord"
+        android:hint="Confirm Password"
         android:layout_marginTop="20dp"
         android:id="@+id/ePassword2"
         android:paddingLeft="20dp"
@@ -46,14 +57,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/mybutton"
+        android:textColor="#fff"
         android:text="REGISTER"/>
-    <ProgressBar
-        android:id="@+id/profile_progressBar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="20dp"
-        android:visibility="gone" />
-
 
 </LinearLayout>

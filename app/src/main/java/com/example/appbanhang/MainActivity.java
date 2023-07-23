@@ -10,30 +10,37 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.appbanhang.adapter.ViewPagerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity{
-    private BottomNavigationView navigationView;
-    private ViewPager viewPager;
+public class MainActivity extends AppCompatActivity {
+    public static BottomNavigationView navigationView;
+    public ViewPager viewPager;
     Toolbar toolbar;
     TextView tvTitle;
+    public static String emailuser = "";
+    public static int cart_count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        navigationView=findViewById(R.id.nav);
-        viewPager=findViewById(R.id.viewPager);
-        toolbar=findViewById(R.id.toolBar);
-        tvTitle=findViewById(R.id.tvTitle);
+        navigationView = findViewById(R.id.nav);
+        viewPager = findViewById(R.id.viewPager);
+        toolbar = findViewById(R.id.toolBar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        tvTitle = findViewById(R.id.tvTitle);
         tvTitle.setText("Home");
         tvTitle.setTextSize(30);
-        ViewPagerAdapter adapter=new ViewPagerAdapter(getSupportFragmentManager(),
-                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        Intent intent = getIntent();
+        emailuser = intent.getStringExtra("email");
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -43,7 +50,7 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void onPageSelected(int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         toolbar.setVisibility(View.VISIBLE);
                         tvTitle.setText("Home");
@@ -56,11 +63,6 @@ public class MainActivity extends AppCompatActivity{
                         break;
 
                     case 2:
-                        toolbar.setVisibility(View.VISIBLE);
-                        tvTitle.setText("Chat");
-                        navigationView.getMenu().findItem(R.id.mMessage).setChecked(true);
-                        break;
-                    case 3:
                         toolbar.setVisibility(View.GONE);
                         navigationView.getMenu().findItem(R.id.mUser).setChecked(true);
                         break;
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity{
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.mFood:
                         toolbar.setVisibility(View.VISIBLE);
                         tvTitle.setText("Home");
@@ -87,14 +89,9 @@ public class MainActivity extends AppCompatActivity{
                         tvTitle.setText("Cart");
                         viewPager.setCurrentItem(1);
                         break;
-                    case R.id.mMessage:
-                        toolbar.setVisibility(View.VISIBLE);
-                        tvTitle.setText("Chat");
-                        viewPager.setCurrentItem(2);
-                        break;
                     case R.id.mUser:
                         toolbar.setVisibility(View.GONE);
-                        viewPager.setCurrentItem(3);
+                        viewPager.setCurrentItem(2);
                         break;
                 }
                 return true;

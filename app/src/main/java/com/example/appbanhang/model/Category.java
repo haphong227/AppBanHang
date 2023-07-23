@@ -1,23 +1,27 @@
 package com.example.appbanhang.model;
 
-public class Category {
-    int img;
-    String name;
+import java.io.Serializable;
+
+public class Category implements Serializable {
+    private String id;
+    private String image;
+    private String name;
 
     public Category() {
     }
 
-    public Category(int img, String name) {
-        this.img = img;
+    public Category(String id, String image, String name) {
+        this.id = id;
+        this.image = image;
         this.name = name;
     }
 
-    public int getImg() {
-        return img;
+    public String getId() {
+        return id;
     }
 
-    public void setImg(int img) {
-        this.img = img;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -27,4 +31,13 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 }
