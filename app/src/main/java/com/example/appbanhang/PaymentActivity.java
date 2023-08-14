@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.appbanhang.adapter.CartAdapter;
 import com.example.appbanhang.model.Cart;
+import com.example.appbanhang.model.Food;
 import com.example.appbanhang.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,7 +39,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class PaymentActivity extends AppCompatActivity {
+public class PaymentActivity extends AppCompatActivity implements View.OnClickListener{
     Toolbar toolbar;
     TextView titlePage, tvAddress, tvTong;
     RecyclerView recyclerView_cart;
@@ -47,13 +48,14 @@ public class PaymentActivity extends AppCompatActivity {
     CartAdapter cartAdapter;
     ArrayList<Cart> cartArrayList;
     private FirebaseUser auth;
-    private DatabaseReference myCart, myUser, myBill;
+    private DatabaseReference myCart, myUser, myBill, myFood;
     String address, email, nameProduct;
     double tong = 0;
     int tongSl=0;
     private static final String TAG = "Bill";
     String randomKey="";
     String idOrder;
+    DecimalFormat decimalFormat;
 
 
     @Override
@@ -77,7 +79,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         idOrder= getIntent().getStringExtra("idOrder");;
 
-        final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+        decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         decimalFormat.applyPattern("#,###,###,###");
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(PaymentActivity.this, LinearLayoutManager.VERTICAL, false);
@@ -136,63 +138,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         });
 
-        btPay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    String saveCurrentTime, savecurrentDate;
-                    Calendar c = Calendar.getInstance();
-                    SimpleDateFormat curDate = new SimpleDateFormat("dd-MM-yyyy");
-                    savecurrentDate = curDate.format(c.getTime());
-                    SimpleDateFormat curTime = new SimpleDateFormat("HH:mm:ss");
-                    saveCurrentTime = curTime.format(c.getTime());
-                    randomKey=savecurrentDate+"-"+saveCurrentTime;
-
-                    HashMap<String,Object> bill=new HashMap<>();
-                    bill.put("idBill", TAG+randomKey);
-                    bill.put("email", auth.getUid());
-                    bill.put("idOrder", idOrder);
-                    bill.put("currentTime", saveCurrentTime);
-                    bill.put("currentDate", savecurrentDate);
-                    bill.put("address", address);
-                    bill.put("quantity", tongSl);
-                    bill.put("cartArrayList", cartArrayList);
-                    bill.put("price",String.valueOf(tong));
-                    myBill = FirebaseDatabase.getInstance().getReference("Bill/"+auth.getUid());
-                    myBill.child(TAG+randomKey).updateChildren(bill)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Calendar calendar = Calendar.getInstance();
-                                    calendar.setTimeInMillis(System.currentTimeMillis());
-                                    AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-
-                                    Intent intent = new Intent(PaymentActivity.this,
-                                            MyReceiver.class);
-                                    intent.putExtra("myAction", "mDoNotify");
-                                    intent.putExtra("Name",email);
-                                    intent.putExtra("Description", String.valueOf(decimalFormat.format(tong)) + " đ");
-
-                                    PendingIntent pendingIntent = PendingIntent.getBroadcast(PaymentActivity.this,
-                                            0, intent, 0);
-                                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
-                                    myCart.child("").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            Log.i("Cart", "notifi");
-                                        }
-                                    });
-
-                                    Toast.makeText(PaymentActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
-                                    Intent i = new Intent(PaymentActivity.this, DetailBillActivity.class);
-                                    i.putExtra("idOrder",idOrder );
-//                                    startActivity(i);
-                                    finish();
-                                }
-                            });
-
-            }
-        });
+        btPay.setOnClickListener(this);
     }
 
     private void initView() {
@@ -202,5 +148,96 @@ public class PaymentActivity extends AppCompatActivity {
         tvTong = findViewById(R.id.tvTong);
         recyclerView_cart = findViewById(R.id.recycleView_cart);
         btPay = findViewById(R.id.btPay);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == btPay){
+            String saveCurrentTime, savecurrentDate;
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat curDate = new SimpleDateFormat("dd-MM-yyyy");
+            savecurrentDate = curDate.format(c.getTime());
+            SimpleDateFormat curTime = new SimpleDateFormat("HH:mm:ss");
+            saveCurrentTime = curTime.format(c.getTime());
+            randomKey=savecurrentDate+"-"+saveCurrentTime;
+
+            HashMap<String,Object> bill=new HashMap<>();
+            bill.put("idBill", TAG+randomKey);
+            bill.put("email", auth.getUid());
+            bill.put("idOrder", idOrder);
+            bill.put("currentTime", saveCurrentTime);
+            bill.put("currentDate", savecurrentDate);
+            bill.put("address", address);
+            bill.put("quantity", tongSl);
+            bill.put("cartArrayList", cartArrayList);
+            bill.put("price",String.valueOf(tong));
+            myBill = FirebaseDatabase.getInstance().getReference("Bill/"+auth.getUid());
+            myBill.child(TAG+randomKey).updateChildren(bill)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            //update số lượng của sản phẩm còn lại sau khi mua hàng
+                            for (Cart cart:cartArrayList){
+                                String idFood = cart.getIdFood();
+                                myFood = FirebaseDatabase.getInstance().getReference().child("food").child(idFood);
+                                myFood.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()){
+                                            String quantity = snapshot.child("quantity").getValue().toString();
+                                            int newQuantity = Integer.parseInt(quantity) - Integer.parseInt(cart.getTotalQuantity());
+                                            HashMap<String,Object> food=new HashMap<>();
+                                            food.put("quantity", newQuantity);
+                                            myFood.updateChildren(food).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()){
+                                                        System.out.println("update soluong");
+                                                        finish();
+                                                    }
+
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+                            }
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTimeInMillis(System.currentTimeMillis());
+                            AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
+                            Intent intent = new Intent(PaymentActivity.this,
+                                    MyReceiver.class);
+                            intent.putExtra("myAction", "mDoNotify");
+                            intent.putExtra("Name",email);
+                            intent.putExtra("Description", String.valueOf(decimalFormat.format(tong)) + " đ");
+
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(PaymentActivity.this,
+                                    0, intent, 0);
+                            am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+                            myCart.child("").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Log.i("Cart", "notifi");
+                                }
+                            });
+
+                            Toast.makeText(PaymentActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(PaymentActivity.this, DetailBillActivity.class);
+                            i.putExtra("idOrder",idOrder );
+//                                    startActivity(i);
+                            finish();
+                        }
+                    });
+
+        }
     }
 }

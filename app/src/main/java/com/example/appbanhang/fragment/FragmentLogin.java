@@ -48,6 +48,7 @@ public class FragmentLogin extends Fragment {
         tvForgot = view.findViewById(R.id.tvFogort);
         btLogin = view.findViewById(R.id.btLogin);
         eEmail.setText("hang2207@gmail.com");
+//        eEmail.setText("admin@gmail.com");
         ePassword.setText("22072001");
         database = FirebaseDatabase.getInstance().getReference();
         databaseReference = database.child("User");

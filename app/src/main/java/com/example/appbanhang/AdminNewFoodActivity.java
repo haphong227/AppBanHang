@@ -35,9 +35,10 @@ public class AdminNewFoodActivity extends AppCompatActivity {
     private String saveCurDate, saveCurTime;
     private final static int galleryPick = 1;
     String name, des, priceFood;
+    int sl ;
     private String downloadImgUrl, randomKey;
     ImageView imgFood, back;
-    EditText idFood, nameFood, price, desFood;
+    EditText idFood, nameFood, price, desFood, quantity;
     Button btAdd;
     private Uri imageUri;
     private StorageReference imgRef;
@@ -87,6 +88,7 @@ public class AdminNewFoodActivity extends AppCompatActivity {
         name = nameFood.getText().toString().trim();
         des = desFood.getText().toString().trim();
         priceFood = price.getText().toString().trim();
+        sl = Integer.parseInt(quantity.getText().toString().trim());
         if (imageUri == null) {
             Toast.makeText(this, "Chọn ảnh", Toast.LENGTH_SHORT).show();
         } else if (name.isEmpty()) {
@@ -143,6 +145,7 @@ public class AdminNewFoodActivity extends AppCompatActivity {
         food.put("name", name);
         food.put("des", des);
         food.put("price", priceFood);
+        food.put("quantity", sl);
         food.put("image", downloadImgUrl);
         myRef.child(TAG + randomKey).updateChildren(food)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -182,6 +185,7 @@ public class AdminNewFoodActivity extends AppCompatActivity {
         price=findViewById(R.id.price);
         desFood=findViewById(R.id.desFood);
         imgFood=findViewById(R.id.imgFood);
+        quantity=findViewById(R.id.quantity);
         back=findViewById(R.id.back);
         btAdd=findViewById(R.id.btAdd);
         toolbar = findViewById(R.id.toolbar);

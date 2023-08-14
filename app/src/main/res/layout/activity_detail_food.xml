@@ -90,6 +90,15 @@
                 android:fontFamily="sans-serif-condensed-medium"
                 android:textColor="@android:color/black"
                 tools:text="Mô tả: Pizzaaaa" />
+            <TextView
+                android:id="@+id/tvQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textColor="@android:color/black"
+                tools:text="Số lượng: 50" />
 
 
         </LinearLayout>

@@ -60,6 +60,7 @@ public class AdminFoodAdapter extends RecyclerView.Adapter<AdminFoodAdapter.Home
         Food food = list.get(position);
         holder.txtName.setText(food.getName());
         holder.txtDes.setText(food.getDes());
+        holder.txtQuantity.setText("Số lượng: " +String.valueOf(food.getQuantity()));
         holder.txtPrice.setText(String.valueOf(decimalFormat.format(Double.parseDouble(food.getPrice())) + " đ"));
         Picasso.get().load(food.getImage())
                 .into(holder.img);
@@ -87,7 +88,7 @@ public class AdminFoodAdapter extends RecyclerView.Adapter<AdminFoodAdapter.Home
 
     public class HomeViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView txtName, txtPrice, txtDes;
+        TextView txtName, txtPrice, txtDes, txtQuantity;
         CardView cardView;
 
         public HomeViewHolder(@NonNull View view) {
@@ -96,6 +97,7 @@ public class AdminFoodAdapter extends RecyclerView.Adapter<AdminFoodAdapter.Home
             txtName = view.findViewById(R.id.txtName);
             txtPrice = view.findViewById(R.id.txtprice);
             txtDes = view.findViewById(R.id.txtdes);
+            txtQuantity = view.findViewById(R.id.txtQuantity);
             cardView = view.findViewById(R.id.cardView);
         }
     }

@@ -57,8 +57,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed-light"
-                android:lines="3"
+                android:lines="2"
                 android:text="Full topping"
+                android:textColor="#000"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/txtQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-light"
+                android:text="Số lượng: 50"
                 android:textColor="#000"
                 android:textSize="15sp" />
         </LinearLayout>

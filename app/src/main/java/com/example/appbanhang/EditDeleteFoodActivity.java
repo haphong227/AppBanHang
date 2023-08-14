@@ -29,7 +29,7 @@ public class EditDeleteFoodActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     ImageView imgFood, back;
-    EditText idFood, nameFood, price, desFood;
+    EditText idFood, nameFood, price, desFood, quantity;
     Button btUpdate, btDelete;
     private String key="";
     private DatabaseReference myRef;
@@ -111,6 +111,7 @@ public class EditDeleteFoodActivity extends AppCompatActivity {
         String name=nameFood.getText().toString();
         String desc=desFood.getText().toString();
         String priceFood=price.getText().toString();
+        int sl= Integer.parseInt(quantity.getText().toString());
         if(name.isEmpty()){
             Toast.makeText(this, "Không được để trống tên!", Toast.LENGTH_SHORT).show();
         }else if(desc.isEmpty()){
@@ -122,6 +123,7 @@ public class EditDeleteFoodActivity extends AppCompatActivity {
             food.put("name",name);
             food.put("des",desc);
             food.put("price",priceFood);
+            food.put("quantity",sl);
             myRef.child("").updateChildren(food).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -147,11 +149,13 @@ public class EditDeleteFoodActivity extends AppCompatActivity {
                     String name=snapshot.child("name").getValue().toString();
                     String des=snapshot.child("des").getValue().toString();
                     String priceFood=snapshot.child("price").getValue().toString();
+                    String quantityFood = snapshot.child("quantity").getValue().toString();
                     String image=snapshot.child("image").getValue().toString();
-                    System.out.println(name +"+" + des +"+" + priceFood +"+" +image );
+                    System.out.println(name +"+" + des +"+" + priceFood +"+" +image+"q"+quantityFood);
                     nameFood.setText(name);
                     desFood.setText(des);
                     price.setText(priceFood);
+                    quantity.setText(quantityFood);
                     Picasso.get().load(image).into(imgFood);
                 }
             }
@@ -180,6 +184,7 @@ public class EditDeleteFoodActivity extends AppCompatActivity {
         price = findViewById(R.id.price);
         desFood = findViewById(R.id.desFood);
         imgFood = findViewById(R.id.imgFood);
+        quantity = findViewById(R.id.quantity);
         back = findViewById(R.id.back);
         btUpdate = findViewById(R.id.btUpdate);
         btDelete = findViewById(R.id.btDelete);

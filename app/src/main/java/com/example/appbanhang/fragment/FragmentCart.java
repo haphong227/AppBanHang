@@ -39,7 +39,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class FragmentCart extends Fragment {
+public class FragmentCart extends Fragment implements View.OnClickListener{
     TextView tvTong;
     RecyclerView recyclerView_cart;
     Button btBuy;
@@ -102,34 +102,34 @@ public class FragmentCart extends Fragment {
             }
         });
 
-        btBuy.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if (total > 0) {
-                    myRef = FirebaseDatabase.getInstance().getReference("Order/" + auth.getUid());
-                    HashMap<String,Object> order=new HashMap<>();
-                    order.put("idOrder", TAG+randomKey);
-                    order.put("listItem", cartArrayList);
-                    order.put("price", total);
-                    order.put("user", auth.getEmail());
-
-                    myRef.child(TAG+randomKey).updateChildren(order)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Log.i("order", "okkkk");
-                                }
-                            });
-                    Intent i = new Intent(getContext(), PaymentActivity.class);
-                    i.putExtra("idOrder",TAG+randomKey );
-                    startActivity(i);
-                } else {
-                    Toast.makeText(getContext(), "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        btBuy.setOnClickListener(this);
 
     }
 
+    @Override
+    public void onClick(View view) {
+        if(view == btBuy){
+            if (total > 0) {
+//                myRef = FirebaseDatabase.getInstance().getReference("Order/" + auth.getUid());
+//                HashMap<String,Object> order=new HashMap<>();
+//                order.put("idOrder", TAG+randomKey);
+//                order.put("listItem", cartArrayList);
+//                order.put("price", total);
+//                order.put("user", auth.getEmail());
+//
+//                myRef.child(TAG+randomKey).updateChildren(order)
+//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<Void> task) {
+//                                Log.i("order", "okkkk");
+//                            }
+//                        });
+                Intent i = new Intent(getContext(), PaymentActivity.class);
+                i.putExtra("idOrder",TAG+randomKey );
+                startActivity(i);
+            } else {
+                Toast.makeText(getContext(), "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }

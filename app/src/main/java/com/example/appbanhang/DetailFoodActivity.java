@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,11 +38,11 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class DetailFoodActivity extends AppCompatActivity {
+public class DetailFoodActivity extends AppCompatActivity implements View.OnClickListener {
     Toolbar toolbar;
     TextView titlePage;
     ImageView img_food, sub, add;
-    TextView tvPrice, tvName, tvDes, tvSl;
+    TextView tvPrice, tvName, tvDes, tvSl, tvQuantity;
     RecyclerView recyclerView_review;
     Button btAdd;
     FoodAdapter adapter;
@@ -50,6 +51,7 @@ public class DetailFoodActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     private FirebaseUser auth;
     String name, idFood, price, des, img, idCate;
+    int quantity=0;
     int totalQuantity = 0;
     double totalPrice = 0;
     ArrayList<Food> dsfoodall = new ArrayList<>();
@@ -66,27 +68,20 @@ public class DetailFoodActivity extends AppCompatActivity {
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 startActivity(new Intent(DetailFoodActivity.this, MainActivity.class));
                 finish();
             }
         });
+        sub.setOnClickListener(this);
+        add.setOnClickListener(this);
+        btAdd.setOnClickListener(this);
 
-        idFood = getIntent().getStringExtra("idFood");
-        name = getIntent().getStringExtra("name");
-        price = getIntent().getStringExtra("price");
-        des = getIntent().getStringExtra("des");
-        img = getIntent().getStringExtra("image");
-        idCate = getIntent().getStringExtra("idCate");
+        displayDetailFood();
+        displayListFood();
+    }
 
-        final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
-        decimalFormat.applyPattern("#,###,###,###");
-
-        tvName.setText(name);
-        tvPrice.setText(String.valueOf(decimalFormat.format(Double.parseDouble(price))) + " đ");
-        tvDes.setText("Mô tả: " + des);
-        Picasso.get().load(img).into(img_food);
-
+    private void displayListFood() {
         LinearLayoutManager manager = new LinearLayoutManager(DetailFoodActivity.this, RecyclerView.HORIZONTAL, false);
         recyclerView_review.setLayoutManager(manager);
         adapter = new FoodAdapter(dataFood, DetailFoodActivity.this);
@@ -111,39 +106,58 @@ public class DetailFoodActivity extends AppCompatActivity {
                 Toast.makeText(DetailFoodActivity.this, "No Data", Toast.LENGTH_SHORT).show();
             }
         });
-
-        sub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (totalQuantity > 1) {
-                    totalQuantity--;
-                    tvSl.setText(String.valueOf(totalQuantity));
-                    totalPrice = Double.parseDouble(price) * totalQuantity;
-                }
-            }
-        });
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (totalQuantity < 10) {
-                    totalQuantity++;
-                    tvSl.setText(String.valueOf(totalQuantity));
-                    totalPrice = Double.parseDouble(price) * totalQuantity;
-                }
-            }
-        });
-
-        btAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (totalQuantity > 0) {
-                    addToCart();
-                }
-            }
-        });
     }
 
+    private void displayDetailFood() {
+        idFood = getIntent().getStringExtra("idFood");
+        name = getIntent().getStringExtra("name");
+        price = getIntent().getStringExtra("price");
+        des = getIntent().getStringExtra("des");
+        img = getIntent().getStringExtra("image");
+        idCate = getIntent().getStringExtra("idCate");
+        quantity = getIntent().getIntExtra("quantity", 22);
+        System.out.println(quantity);
+        final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+        decimalFormat.applyPattern("#,###,###,###");
+
+        tvName.setText(name);
+        tvPrice.setText(String.valueOf(decimalFormat.format(Double.parseDouble(price))) + " đ");
+        tvDes.setText("Mô tả: " + des);
+        if(quantity > 0){
+            tvQuantity.setText("Số lượng: "+String.valueOf(quantity));
+        }else{
+            tvQuantity.setText("SOLD OUT!");
+            tvQuantity.setTextColor(Color.RED);
+        }
+        Picasso.get().load(img).into(img_food);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == sub) {
+            if (totalQuantity > 1) {
+                totalQuantity--;
+                tvSl.setText(String.valueOf(totalQuantity));
+                totalPrice = Double.parseDouble(price) * totalQuantity;
+            }
+        }
+        if (view == add) {
+            if (totalQuantity < 10) {
+                totalQuantity++;
+                tvSl.setText(String.valueOf(totalQuantity));
+                totalPrice = Double.parseDouble(price) * totalQuantity;
+            }
+        }
+        if (view == btAdd) {
+            if (totalQuantity > 0) {
+                if(quantity != 0) addToCart();
+                else Toast.makeText(this, "Sản phẩm đã hết!", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(this, "Vui lòng chọn số lượng sản phẩm!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
     private void addToCart() {
         auth = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Cart/" + auth.getUid());
@@ -161,7 +175,6 @@ public class DetailFoodActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(DetailFoodActivity.this, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
-//                            finish();
                         } else {
                             Toast.makeText(DetailFoodActivity.this,
                                     "Thêm không thành công!", Toast.LENGTH_SHORT).show();
@@ -170,7 +183,6 @@ public class DetailFoodActivity extends AppCompatActivity {
                 });
 
     }
-
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
         titlePage = findViewById(R.id.toolbar_title);
@@ -182,6 +194,7 @@ public class DetailFoodActivity extends AppCompatActivity {
         sub = findViewById(R.id.sub);
         add = findViewById(R.id.add);
         tvSl = findViewById(R.id.tvSl);
+        tvQuantity = findViewById(R.id.tvQuantity);
         recyclerView_review = findViewById(R.id.recycleView_review);
     }
 }

@@ -10,12 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.appbanhang.adapter.BillAdapter;
 import com.example.appbanhang.adapter.CartAdapter;
 import com.example.appbanhang.model.Bill;
 import com.example.appbanhang.model.Cart;
-import com.example.appbanhang.model.Order;
-import com.example.appbanhang.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
