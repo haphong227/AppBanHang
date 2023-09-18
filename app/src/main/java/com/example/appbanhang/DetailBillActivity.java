@@ -1,18 +1,18 @@
 package com.example.appbanhang;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-
-import com.example.appbanhang.adapter.CartAdapter;
+import com.example.appbanhang.adapter.ListFoodAdapter;
 import com.example.appbanhang.model.Bill;
-import com.example.appbanhang.model.Cart;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,18 +23,18 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class DetailBillActivity extends AppCompatActivity {
     Toolbar toolbar;
-    TextView titlePage, tvAddress, tvidBill, tvDate, tvPrice;
+    TextView titlePage, tvAddress, tvidBill, tvDate, tvPrice, tvName, tvPhone;
     RecyclerView recyclerView;
-    ArrayList<Cart> cartArrayList= new ArrayList<>();
-    CartAdapter cartAdapter;
+    ListFoodAdapter cartAdapter;
     DatabaseReference myRef;
     FirebaseUser auth;
-    String address, idBill, idOrder, price, date;
+    String address, idBill, idOrder, price, date, name, phone;
+    ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,19 +65,23 @@ public class DetailBillActivity extends AppCompatActivity {
         LinearLayoutManager manager=new LinearLayoutManager(DetailBillActivity.this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
 
-        auth=FirebaseAuth.getInstance().getCurrentUser();
-        myRef=FirebaseDatabase.getInstance().getReference("Bill/"+auth.getUid());
+        auth = FirebaseAuth.getInstance().getCurrentUser();
+        myRef = FirebaseDatabase.getInstance().getReference("Bill/" + auth.getUid());
         myRef.child("").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Bill bill = data.getValue(Bill.class);
                     if (bill.getIdOrder().equalsIgnoreCase(idOrder)) {
-                        date=bill.getCurrentDate()+" "+bill.getCurrentTime();
-                        cartAdapter = new CartAdapter(bill.getCartArrayList(), DetailBillActivity.this);
+                        date=bill.getCurrentTime() + " " + bill.getCurrentDate();
+                        name=bill.getName();
+                        phone=bill.getPhone();
+                        cartAdapter = new ListFoodAdapter(bill.getCartArrayList(), DetailBillActivity.this);
                     }
                 }
                 tvDate.setText(date);
+                tvName.setText(name);
+                tvPhone.setText(phone);
                 recyclerView.setAdapter(cartAdapter);
                 recyclerView.setHasFixedSize(true);
             }
@@ -90,12 +94,15 @@ public class DetailBillActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        toolbar=findViewById(R.id.toolbar);
-        titlePage=findViewById(R.id.toolbar_title);
-        tvAddress=findViewById(R.id.tvAddress);
-        tvPrice=findViewById(R.id.tvPrice);
-        tvidBill=findViewById(R.id.idBill);
-        tvDate=findViewById(R.id.tvTime);
-        recyclerView=findViewById(R.id.recycleView_food);
+        toolbar = findViewById(R.id.toolbar);
+        titlePage = findViewById(R.id.toolbar_title);
+        tvAddress = findViewById(R.id.tvAddress);
+        tvPrice = findViewById(R.id.tvPrice);
+        tvPrice = findViewById(R.id.tvPrice);
+        tvidBill = findViewById(R.id.tvidBill);
+        tvDate = findViewById(R.id.tvDate);
+        tvName = findViewById(R.id.tvName);
+        tvPhone = findViewById(R.id.tvPhone);
+        recyclerView = findViewById(R.id.recycleView_food);
     }
 }

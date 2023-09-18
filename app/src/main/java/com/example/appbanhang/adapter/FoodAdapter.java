@@ -66,7 +66,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.HomeViewHolder
                 i.putExtra("image", food.getImage());
                 i.putExtra("idCate", food.getIdCate());
                 i.putExtra("quantity", food.getQuantity());
-//                i.putExtra("quantity", String.valueOf(food.getQuantity()));
                 System.out.println("okiiii" + food.getQuantity());
                 context.startActivity(i);
             }

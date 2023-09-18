@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="@color/green_400"
+        app:menu="@menu/admin_toolbars"
         android:elevation="10dp">
 
         <TextView

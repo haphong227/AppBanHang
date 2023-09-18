@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -44,19 +45,22 @@ public class AdminCategoryActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         fabutton = findViewById(R.id.fabutton);
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationIcon(R.drawable.ic_logout1);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
-            public void onClick(View v) {
-                firebaseAuth=FirebaseAuth.getInstance();
-                firebaseAuth.signOut();
-                startActivity(new Intent(AdminCategoryActivity.this, LoginActivity.class));
-                finish();
-                Toast.makeText(getBaseContext(), "See you later", Toast.LENGTH_SHORT).show();
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.notification) {
+                    startActivity(new Intent(AdminCategoryActivity.this, AdminNotificationActivity.class));
+                }
+                if (id == R.id.logOut) {
+                    firebaseAuth = FirebaseAuth.getInstance();
+                    firebaseAuth.signOut();
+                    startActivity(new Intent(AdminCategoryActivity.this, LoginActivity.class));
+                    finish();
+                    Toast.makeText(getBaseContext(), "See you later", Toast.LENGTH_SHORT).show();
+                }
+
+                return true;
             }
         });
 

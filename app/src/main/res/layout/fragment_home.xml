@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="Hôm nay\nbạn muốn ăn gì?"
+            android:text="Fast and Delicious\nFood"
             android:textColor="@color/green_400"
             android:textSize="24sp" />
 
@@ -34,6 +34,7 @@
 
         <TextView
             style="@style/viewParent.headerText"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -50,6 +51,8 @@
             style="@style/viewParent.headerText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
             android:text="Danh sách món ăn"
             android:textColor="#03041d"

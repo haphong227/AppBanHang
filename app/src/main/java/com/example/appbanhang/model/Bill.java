@@ -9,23 +9,29 @@ public class Bill implements Serializable {
     String CurrentDate;
     String idBill;
     String idOrder;
-    String email;
+    String idUser;
+    String name;
+    String phone;
     String price;
     int quantity;
+    String stateOrder;
     ArrayList<Cart> cartArrayList;
 
     public Bill() {
     }
 
-    public Bill(String address, String currentTime, String currentDate, String idBill, String idOrder, String email, String price, int quantity, ArrayList<Cart> cartArrayList) {
+    public Bill(String address, String currentTime, String currentDate, String idBill, String idOrder, String idUser, String name, String phone, String price, int quantity, String stateOrder, ArrayList<Cart> cartArrayList) {
         this.address = address;
         CurrentTime = currentTime;
         CurrentDate = currentDate;
         this.idBill = idBill;
         this.idOrder = idOrder;
-        this.email = email;
+        this.idUser = idUser;
+        this.name = name;
+        this.phone = phone;
         this.price = price;
         this.quantity = quantity;
+        this.stateOrder = stateOrder;
         this.cartArrayList = cartArrayList;
     }
 
@@ -35,6 +41,14 @@ public class Bill implements Serializable {
 
     public void setIdOrder(String idOrder) {
         this.idOrder = idOrder;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -51,14 +65,6 @@ public class Bill implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public String getIdUser() {
-        return email;
-    }
-
-    public void setIdUser(String idUser) {
-        this.email = idUser;
     }
 
     public String getCurrentTime() {
@@ -91,6 +97,30 @@ public class Bill implements Serializable {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getStateOrder() {
+        return stateOrder;
+    }
+
+    public void setStateOrder(String stateOrder) {
+        this.stateOrder = stateOrder;
     }
 
     public ArrayList<Cart> getCartArrayList() {

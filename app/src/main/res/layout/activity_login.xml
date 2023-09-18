@@ -22,9 +22,9 @@
 
         <ImageView
             android:id="@+id/img"
-            android:src="@drawable/intro"
-            android:layout_marginLeft="150dp"
-            android:layout_width="100dp"
+            android:src="@drawable/hanfood_intro"
+            android:layout_centerHorizontal="true"
+            android:layout_width="150dp"
             android:layout_height="100dp"/>
         <TextView
             android:id="@+id/txt"
@@ -36,7 +36,7 @@
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/bungeeregular"
             android:lineSpacingMultiplier="1.0"
-            android:text="Hello , Welcome To Foody"
+            android:text="Welcome To HanFood"
             android:textColor="#fff"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -72,6 +72,13 @@
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+<!--                    <com.facebook.login.widget.LoginButton-->
+<!--                        android:id="@+id/facebook"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center_horizontal"-->
+<!--                        android:layout_marginTop="30dp"-->
+<!--                        android:layout_marginBottom="30dp" />-->
                         <ImageView
                             android:id="@+id/facebook"
                             android:layout_width="30dp"
@@ -88,6 +95,7 @@
                             android:src="@drawable/icon_twitter"
                             android:layout_gravity="center"/>
                         <ImageView
+                            android:id="@+id/google"
                             android:layout_toRightOf="@+id/google"
                             android:layout_width="30dp"
                             android:layout_height="30dp"

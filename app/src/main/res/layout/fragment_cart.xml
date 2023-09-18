@@ -24,7 +24,7 @@
             android:background="#ffffff"
             android:gravity="center"
             android:padding="8dp"
-            android:text="Tổng tiền hàng: 50000 ₫"
+            android:text="Tổng tiền hàng: 0 ₫"
             android:textSize="20sp" />
         <Button
             android:id="@+id/btBuy"

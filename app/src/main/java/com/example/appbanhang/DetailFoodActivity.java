@@ -1,24 +1,22 @@
 package com.example.appbanhang;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.appbanhang.adapter.FoodAdapter;
 import com.example.appbanhang.model.Food;
-import com.example.appbanhang.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,9 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -160,6 +156,10 @@ public class DetailFoodActivity extends AppCompatActivity implements View.OnClic
     }
     private void addToCart() {
         auth = FirebaseAuth.getInstance().getCurrentUser();
+//        if(auth!=null){
+//            Intent is = new Intent(this, MainActivity.class);
+//            startActivity(is);
+//        }
         databaseReference = FirebaseDatabase.getInstance().getReference("Cart/" + auth.getUid());
 
         final HashMap<String, Object> cart = new HashMap<>();

@@ -53,32 +53,10 @@ public class FragmentUser extends Fragment {
         tvHistory = view.findViewById(R.id.tvHistory);
         tvLogout = view.findViewById(R.id.tvLogout);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-            mRef = FirebaseDatabase.getInstance().getReference("User");
-            mRef.child("").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        User user = data.getValue(User.class);
-                        if (user.getToken().equalsIgnoreCase(firebaseUser.getUid())) {
-                            name=user.getName();
-                            email=user.getEmail();
-                            img=user.getImage();
-                        }
-                    }
-                    tvEmail.setText(email);
-                    tvUsername.setText(name);
-                    if (img == null) {
-                        Picasso.get().load("https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg").into(img_profile);
-                    } else if (img != null) {
-                        Picasso.get().load(img).into(img_profile);
-                    }
-                }
+        if (firebaseUser != null) {
+            displayUser();
+        }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
 
         tvEditprofile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,5 +92,34 @@ public class FragmentUser extends Fragment {
             }
         });
         return view;
+    }
+
+    private void displayUser() {
+        mRef = FirebaseDatabase.getInstance().getReference("User");
+        mRef.child("").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    User user = data.getValue(User.class);
+                    if (user.getToken().equalsIgnoreCase(firebaseUser.getUid())) {
+                        name = user.getName();
+                        email = user.getEmail();
+                        img = user.getImage();
+                    }
+                }
+                tvEmail.setText(email);
+                tvUsername.setText(name);
+                if (img == null) {
+                    Picasso.get().load("https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg").into(img_profile);
+                } else if (img != null) {
+                    Picasso.get().load(img).into(img_profile);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

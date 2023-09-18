@@ -1,11 +1,5 @@
 package com.example.appbanhang;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -17,10 +11,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.appbanhang.adapter.CartAdapter;
 import com.example.appbanhang.model.Cart;
-import com.example.appbanhang.model.Food;
 import com.example.appbanhang.model.User;
+import com.example.appbanhang.notification.MyReceiver;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,14 +48,15 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     CartAdapter cartAdapter;
     ArrayList<Cart> cartArrayList;
     private FirebaseUser auth;
-    private DatabaseReference myCart, myUser, myBill, myFood;
-    String address, email, nameProduct;
-    double tong = 0;
+    private DatabaseReference myCart, myUser, myBill, myFood, myNoti;
+    String address, email, phone, name;
+    double total = 0;
     int tongSl=0;
     private static final String TAG = "Bill";
     String randomKey="";
     String idOrder;
     DecimalFormat decimalFormat;
+    String content="";
 
 
     @Override
@@ -72,40 +73,45 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(PayActivity.this,MainActivity.class));
                 finish();
             }
         });
 
-        idOrder= getIntent().getStringExtra("idOrder");;
+        idOrder= getIntent().getStringExtra("idOrder");
+        total= getIntent().getDoubleExtra("total", 22);
 
         decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         decimalFormat.applyPattern("#,###,###,###");
+        tvTong.setText(String.valueOf(decimalFormat.format(total)) + " đ");
 
+        displayCart();
+        getInforUser();
+
+        btPay.setOnClickListener(this);
+    }
+
+    private void displayCart() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(PaymentActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerView_cart.setLayoutManager(linearLayoutManager);
+
         auth = FirebaseAuth.getInstance().getCurrentUser();
+
         myCart = FirebaseDatabase.getInstance().getReference("Cart/"+auth.getUid());
         myCart.child("").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                double totalAmount = 0;
                 int sl=0;
                 cartArrayList = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Cart cart = data.getValue(Cart.class);
                     cartArrayList.add(cart);
-                    nameProduct=cart.getProductName();
                     sl+=Integer.parseInt(cart.getTotalQuantity());
-                    totalAmount += Double.parseDouble(cart.getTotalPrice());
                 }
                 cartAdapter = new CartAdapter(cartArrayList, PaymentActivity.this);
                 recyclerView_cart.setAdapter(cartAdapter);
                 recyclerView_cart.setHasFixedSize(true);
 
                 tongSl=sl;
-                tong = totalAmount;
-                tvTong.setText(String.valueOf(decimalFormat.format(totalAmount)) + " đ");
             }
 
             @Override
@@ -114,6 +120,9 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
+    }
+
+    private void getInforUser() {
 
         myUser = FirebaseDatabase.getInstance().getReference("User");
         myUser.child("").addValueEventListener(new ValueEventListener() {
@@ -124,6 +133,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                     if (user.getToken().equalsIgnoreCase(auth.getUid())) {
                         address = user.getDiachi();
                         email = user.getEmail();
+                        phone = user.getPhone();
+                        name = user.getName();
                     }
                 }
                 tvAddress.setText(address);
@@ -137,18 +148,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
             }
 
         });
-
-        btPay.setOnClickListener(this);
     }
 
-    private void initView() {
-        toolbar = findViewById(R.id.toolbar);
-        titlePage = findViewById(R.id.toolbar_title);
-        tvAddress = findViewById(R.id.tvAddress);
-        tvTong = findViewById(R.id.tvTong);
-        recyclerView_cart = findViewById(R.id.recycleView_cart);
-        btPay = findViewById(R.id.btPay);
-    }
 
     @Override
     public void onClick(View view) {
@@ -163,14 +164,17 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
             HashMap<String,Object> bill=new HashMap<>();
             bill.put("idBill", TAG+randomKey);
-            bill.put("email", auth.getUid());
+            bill.put("idUser", auth.getUid());
             bill.put("idOrder", idOrder);
             bill.put("currentTime", saveCurrentTime);
             bill.put("currentDate", savecurrentDate);
             bill.put("address", address);
+            bill.put("name", name);
+            bill.put("phone", phone);
             bill.put("quantity", tongSl);
             bill.put("cartArrayList", cartArrayList);
-            bill.put("price",String.valueOf(tong));
+            bill.put("price",String.valueOf(total));
+            bill.put("stateOrder","Đã xác nhận");
             myBill = FirebaseDatabase.getInstance().getReference("Bill/"+auth.getUid());
             myBill.child(TAG+randomKey).updateChildren(bill)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -209,6 +213,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                                 });
 
                             }
+
                             Calendar calendar = Calendar.getInstance();
                             calendar.setTimeInMillis(System.currentTimeMillis());
                             AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
@@ -216,28 +221,62 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                             Intent intent = new Intent(PaymentActivity.this,
                                     MyReceiver.class);
                             intent.putExtra("myAction", "mDoNotify");
-                            intent.putExtra("Name",email);
-                            intent.putExtra("Description", String.valueOf(decimalFormat.format(tong)) + " đ");
-
+                            intent.putExtra("Name",name);
+                            intent.putExtra("Description", String.valueOf(decimalFormat.format(total)) + " đ");
+//                            content = "Đặt thành công đơn hàng " +TAG+randomKey;
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(PaymentActivity.this,
                                     0, intent, 0);
                             am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
-                            myCart.child("").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Log.i("Cart", "notifi");
-                                }
-                            });
+                            removeCart();
+//                            addNotification();
 
                             Toast.makeText(PaymentActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(PaymentActivity.this, DetailBillActivity.class);
                             i.putExtra("idOrder",idOrder );
-//                                    startActivity(i);
                             finish();
                         }
                     });
 
         }
     }
+
+//    private void addNotification() {
+//        HashMap<String,Object> notification=new HashMap<>();
+//        notification.put("idNoti", "Noti"+randomKey);
+//        notification.put("content", content);
+//        notification.put("email", auth.getEmail());
+//        notification.put("stateOrder", "Đã xác nhận");
+//
+//        myNoti = FirebaseDatabase.getInstance().getReference("Notification/"+auth.getUid());
+//        myNoti.child("Noti"+randomKey).updateChildren(notification).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                if(task.isSuccessful()){
+//                    System.out.println("push notification");
+//                    finish();
+//                }
+//            }
+//        });
+//    }
+
+    private void removeCart() {
+        myCart.child("").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.i("Cart", "notifi");
+            }
+        });
+
+    }
+
+    private void initView() {
+        toolbar = findViewById(R.id.toolbar);
+        titlePage = findViewById(R.id.toolbar_title);
+        tvAddress = findViewById(R.id.tvAddress);
+        tvTong = findViewById(R.id.tvTong);
+        recyclerView_cart = findViewById(R.id.recycleView_cart);
+        btPay = findViewById(R.id.btPay);
+    }
+
 }

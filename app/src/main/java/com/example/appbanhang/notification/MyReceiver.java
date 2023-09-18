@@ -1,4 +1,4 @@
-package com.example.appbanhang;
+package com.example.appbanhang.notification;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
@@ -13,6 +13,9 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.appbanhang.MainActivity;
+import com.example.appbanhang.R;
+
 public class MyReceiver extends BroadcastReceiver {
     final String CHANNEL_ID = "101";
     @SuppressLint("NotificationPermission")
@@ -26,6 +29,7 @@ public class MyReceiver extends BroadcastReceiver {
             NotificationManager manager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                //config channel 1
                 NotificationChannel channel1 = new NotificationChannel(
                         CHANNEL_ID,
                         "Channel 1",
@@ -53,5 +57,6 @@ public class MyReceiver extends BroadcastReceiver {
             builder.setContentIntent(pendingIntent);
             manager.notify(12345, builder.build());
         }
+
     }
 }

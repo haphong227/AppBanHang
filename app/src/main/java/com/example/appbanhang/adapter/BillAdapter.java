@@ -1,10 +1,7 @@
 package com.example.appbanhang.adapter;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +9,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appbanhang.AdminFoodActivity;
 import com.example.appbanhang.DetailBillActivity;
 import com.example.appbanhang.R;
 import com.example.appbanhang.model.Bill;
-import com.example.appbanhang.model.Cart;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.HomeViewHolder>{
@@ -53,6 +46,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.HomeViewHolder
         holder.tvPrice.setText(String.valueOf(decimalFormat.format(Double.parseDouble(bill.getPrice())) + " đ"));
         holder.tvDate.setText(bill.getCurrentDate());
         holder.tvTime.setText(bill.getCurrentTime());
+        holder.tvStateOrder.setText(bill.getStateOrder().toUpperCase());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +66,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.HomeViewHolder
     }
 
     public class HomeViewHolder extends RecyclerView.ViewHolder{
-        TextView tvQuantity, tvPrice, tvDate, tvTime;
+        TextView tvQuantity, tvPrice, tvDate, tvTime, tvStateOrder;
         CardView cardView;
         public HomeViewHolder(@NonNull View view) {
             super(view);
@@ -81,6 +75,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.HomeViewHolder
             tvDate=view.findViewById(R.id.tvDate);
             tvTime=view.findViewById(R.id.tvTime);
             cardView=view.findViewById(R.id.card_view);
+            tvStateOrder=view.findViewById(R.id.tvStateOrder);
         }
     }
 }

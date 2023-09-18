@@ -71,12 +71,23 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
         saveCurTime = curTime.format(c.getTime());
         randomKey = saveCurDate + "-" + saveCurTime;
 
-        final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
-        decimalFormat.applyPattern("#,###,###,###");
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView_cart.setLayoutManager(linearLayoutManager);
         auth = FirebaseAuth.getInstance().getCurrentUser();
+        if (auth!=null){
+            displayCart();
+        }
+
+
+        btBuy.setOnClickListener(this);
+
+    }
+
+    private void displayCart() {
+        final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+        decimalFormat.applyPattern("#,###,###,###");
         myRef = FirebaseDatabase.getInstance().getReference("Cart/" + auth.getUid());
         myRef.child("").addValueEventListener(new ValueEventListener() {
             @Override
@@ -101,9 +112,6 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
 
             }
         });
-
-        btBuy.setOnClickListener(this);
-
     }
 
     @Override
@@ -126,6 +134,7 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
 //                        });
                 Intent i = new Intent(getContext(), PaymentActivity.class);
                 i.putExtra("idOrder",TAG+randomKey );
+                i.putExtra("total",total );
                 startActivity(i);
             } else {
                 Toast.makeText(getContext(), "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();

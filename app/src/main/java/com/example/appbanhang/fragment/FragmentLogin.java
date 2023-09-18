@@ -50,6 +50,7 @@ public class FragmentLogin extends Fragment {
         eEmail.setText("hang2207@gmail.com");
 //        eEmail.setText("admin@gmail.com");
         ePassword.setText("22072001");
+
         database = FirebaseDatabase.getInstance().getReference();
         databaseReference = database.child("User");
         mAuth = FirebaseAuth.getInstance();
@@ -92,7 +93,7 @@ public class FragmentLogin extends Fragment {
                         startActivity(intent);
 
                     } else {
-                        Toast.makeText(getActivity(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Tài khoản hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

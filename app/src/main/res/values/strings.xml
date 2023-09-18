@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Foody</string>
+    <string name="app_name">HanFood</string>
     <string-array name="navigation">
         <item>Food</item>
         <item>Cart</item>
@@ -7,4 +7,16 @@
         <item>Message</item>
         <item>Information</item>
     </string-array>
+    <string-array name="stateOrder">
+        <item>Đã xác nhận</item>
+<!--        <item>Đang làm đồ ăn</item>-->
+        <item>Đang giao hàng</item>
+        <item>Đã giao thành công</item>
+    </string-array>
+
+    <string name="facebook_app_id">1234</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">56789</string>
+
+
 </resources>
