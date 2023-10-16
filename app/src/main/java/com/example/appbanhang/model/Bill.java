@@ -7,10 +7,12 @@ public class Bill implements Serializable {
     String address;
     String CurrentTime;
     String CurrentDate;
+    String email;
     String idBill;
     String idOrder;
     String idUser;
     String name;
+    String note;
     String phone;
     String price;
     int quantity;
@@ -20,14 +22,16 @@ public class Bill implements Serializable {
     public Bill() {
     }
 
-    public Bill(String address, String currentTime, String currentDate, String idBill, String idOrder, String idUser, String name, String phone, String price, int quantity, String stateOrder, ArrayList<Cart> cartArrayList) {
+    public Bill(String address, String currentTime, String currentDate, String email, String idBill, String idOrder, String idUser, String name, String note, String phone, String price, int quantity, String stateOrder, ArrayList<Cart> cartArrayList) {
         this.address = address;
         CurrentTime = currentTime;
         CurrentDate = currentDate;
+        this.email = email;
         this.idBill = idBill;
         this.idOrder = idOrder;
         this.idUser = idUser;
         this.name = name;
+        this.note = note;
         this.phone = phone;
         this.price = price;
         this.quantity = quantity;
@@ -67,6 +71,14 @@ public class Bill implements Serializable {
         this.quantity = quantity;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     public String getCurrentTime() {
         return CurrentTime;
     }
@@ -81,6 +93,14 @@ public class Bill implements Serializable {
 
     public void setCurrentDate(String currentDate) {
         CurrentDate = currentDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getIdBill() {

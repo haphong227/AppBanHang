@@ -23,8 +23,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="1x  "
-                android:textSize="18dp" />
+                android:fontFamily="@font/poppinregular"
+                android:text="1x  "/>
 
             <TextView
                 android:id="@+id/tvName"
@@ -32,17 +32,18 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/tvPrice"
                 android:layout_toRightOf="@id/tvQuantity"
+                android:fontFamily="@font/poppinregular"
                 android:lines="1"
-                android:text="Nem nướng Nha Trang"
-                android:textSize="18dp" />
+                android:textColor="#000"
+                android:text="Nem nướng Nha Trang" />
 
             <TextView
                 android:id="@+id/tvPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="40.000đ"
-                android:textSize="18dp" />
+                android:fontFamily="@font/poppinregular"
+                android:text="40.000đ" />
         </RelativeLayout>
 
         <View

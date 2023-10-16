@@ -42,9 +42,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="#fafafa"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -54,79 +54,145 @@
                     android:fontFamily="@font/poppinregular"
                     android:gravity="center"
                     android:text="Giao tới"
-                    android:textSize="15sp"
                     android:textStyle="bold" />
-            </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="5dp"
-                app:cardCornerRadius="8dp">
-
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/ic_maps"
-                    android:text="Địa Chỉ" />
-
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/tvChangeAddress"
-                        android:text="Thay đổi"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/green_400"
-                        android:fontFamily="@font/poppinsmedium"
-                        android:layout_marginRight="20dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:id="@+id/tvAddress"
-                        android:layout_below="@+id/tvChangeAddress"
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_maps"
+                        android:text="Địa Chỉ" />
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="100dp"
-                        android:fontFamily="@font/poppinsmedium"
-                        android:text="32A Hoàng Ngọc Phách"
-                        android:textColor="#000"
-                        android:textSize="15sp" />
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvChangeAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="20dp"
+                            android:fontFamily="@font/poppinregular"
+                            android:text="Thay đổi"
+                            android:textColor="@color/green_400"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvChangeAddress"
+                            android:fontFamily="@font/poppinregular"
+                            android:text="Học viện Công nghệ Bưu chính Viễn thông" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="#fafafa"
-                android:orientation="horizontal">
+                android:background="#fff"
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/poppinregular"
-                    android:gravity="center"
                     android:text="Đơn hàng của bạn"
-                    android:textSize="15sp"
                     android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleView_cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycleView_cart"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#fff"
+                android:gravity="center_vertical"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/note"
+                    android:layout_width="20dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/note" />
+
+                <EditText
+                    android:id="@+id/edNote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/note"
+                    android:fontFamily="@font/poppinregular"
+                    android:background="@drawable/myedittext"
+                    android:textSize="17dp"
+                    android:hint="Bạn có gì muốn nhắn tới nhà hàng không?" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#fff"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff">
+
+                    <TextView
+                        android:id="@+id/tvQuantityFood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppinregular"
+                        android:text="Tạm tính (1 món)" />
+
+                    <TextView
+                        android:id="@+id/tvTmpPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:fontFamily="@font/poppinregular"
+                        android:text="50.000đ" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppinregular"
+                        android:text="Phí áp dụng" />
+
+                    <TextView
+                        android:id="@+id/tvShip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:fontFamily="@font/poppinregular"
+                        android:text="0đ" />
+                </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="#fafafa"
+                android:background="#fff"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -135,57 +201,67 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:fontFamily="@font/poppinregular"
-                    android:text="Phương thức thanh toán"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:text="Thanh toán bằng: " />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
-
-                <ImageView
-                    android:id="@+id/img"
-                    android:layout_width="30dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/money" />
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_toRightOf="@id/img"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Tiền mặt"
-                    android:textStyle="normal" />
-            </RelativeLayout>
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:id="@+id/img"
+                        android:layout_width="20dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@+id/tvMethod"
+                        android:src="@drawable/money" />
+
+                    <TextView
+                        android:id="@+id/tvMethod"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/poppinregular"
+                        android:text="Tiền mặt" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/remove"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_width="20dp"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:layout_alignParentRight="true"-->
+<!--                        android:background="@drawable/more"/>-->
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="90dp"
         android:layout_alignParentBottom="true"
         app:cardElevation="10dp">
 
         <LinearLayout
             android:id="@+id/linear1"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="90dp"
+            android:layout_marginBottom="5dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/robotoregular"
                     android:text="Tổng cộng"
@@ -200,7 +276,7 @@
                     android:fontFamily="@font/robotobold"
                     android:text="54,000 đ"
                     android:textColor="#000"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <Button
@@ -211,8 +287,8 @@
                 android:layout_marginRight="20dp"
                 android:backgroundTint="@color/green_400"
                 android:fontFamily="sans-serif-black"
-                android:textColor="#fff"
-                android:text="Đặt hàng" />
+                android:text="Đặt hàng"
+                android:textColor="#fff" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

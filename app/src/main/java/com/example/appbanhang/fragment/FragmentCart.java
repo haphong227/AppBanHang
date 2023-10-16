@@ -2,7 +2,6 @@ package com.example.appbanhang.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appbanhang.AdminFoodActivity;
 import com.example.appbanhang.PaymentActivity;
 import com.example.appbanhang.R;
 import com.example.appbanhang.adapter.CartAdapter;
 import com.example.appbanhang.model.Cart;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +32,6 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
 
 public class FragmentCart extends Fragment implements View.OnClickListener{
@@ -65,7 +60,7 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
         btBuy = view.findViewById(R.id.btBuy);
 
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat curDate = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat curDate = new SimpleDateFormat("yyyy-MM-dd");
         saveCurDate = curDate.format(c.getTime());
         SimpleDateFormat curTime = new SimpleDateFormat("HH:mm:ss");
         saveCurTime = curTime.format(c.getTime());
@@ -118,20 +113,6 @@ public class FragmentCart extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         if(view == btBuy){
             if (total > 0) {
-//                myRef = FirebaseDatabase.getInstance().getReference("Order/" + auth.getUid());
-//                HashMap<String,Object> order=new HashMap<>();
-//                order.put("idOrder", TAG+randomKey);
-//                order.put("listItem", cartArrayList);
-//                order.put("price", total);
-//                order.put("user", auth.getEmail());
-//
-//                myRef.child(TAG+randomKey).updateChildren(order)
-//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                Log.i("order", "okkkk");
-//                            }
-//                        });
                 Intent i = new Intent(getContext(), PaymentActivity.class);
                 i.putExtra("idOrder",TAG+randomKey );
                 i.putExtra("total",total );

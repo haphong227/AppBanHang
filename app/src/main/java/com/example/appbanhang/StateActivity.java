@@ -44,7 +44,7 @@ public class StateActivity extends AppCompatActivity implements AdapterView.OnIt
     RecyclerView recyclerView;
     ListFoodAdapter cartAdapter;
     DatabaseReference myRef, myNoti;
-    String address, idBill, idOrder, idUser, price, date, name, stateOrder, randomKey;
+    String address, idBill, idOrder, idUser, price, date, name, stateOrder, email, randomKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +81,7 @@ public class StateActivity extends AppCompatActivity implements AdapterView.OnIt
                     Bill bill = data.getValue(Bill.class);
                     if (bill.getIdOrder().equalsIgnoreCase(idOrder)) {
                         name = bill.getName();
+                        email = bill.getEmail();
                         address = bill.getAddress();
                         price = bill.getPrice();
                         date = bill.getCurrentTime() + " " + bill.getCurrentDate();
@@ -138,7 +139,7 @@ public class StateActivity extends AppCompatActivity implements AdapterView.OnIt
                                 StateNotification.class);
                         intent.putExtra("myAction", "mDoNotify");
                         intent.putExtra("Name", name);
-                        intent.putExtra("Description", stateOrder.toLowerCase());
+                        intent.putExtra("Description", idBill+" "+stateOrder.toLowerCase());
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(StateActivity.this,
                                 0, intent, 0);
                         am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
@@ -154,7 +155,7 @@ public class StateActivity extends AppCompatActivity implements AdapterView.OnIt
     private void addNotification() {
         String saveCurrentTime, savecurrentDate;
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat curDate = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat curDate = new SimpleDateFormat("yyyy-MM-dd");
         savecurrentDate = curDate.format(c.getTime());
         SimpleDateFormat curTime = new SimpleDateFormat("HH:mm:ss");
         saveCurrentTime = curTime.format(c.getTime());
@@ -163,6 +164,7 @@ public class StateActivity extends AppCompatActivity implements AdapterView.OnIt
         HashMap<String, Object> notification = new HashMap<>();
         notification.put("idNoti", "Noti" + randomKey);
         notification.put("idBill", idBill);
+        notification.put("email", email);
         notification.put("name", name);
         notification.put("stateOrder", stateOrder);
         notification.put("time", saveCurrentTime + " " + savecurrentDate);

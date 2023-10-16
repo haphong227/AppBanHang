@@ -48,12 +48,63 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp" />
-                <!--                <ListView-->
-                <!--                    android:id="@+id/listView_food"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"/>-->
             </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="vertical"
+                android:padding="10dp">
 
+                <TextView
+                    android:id="@+id/tvQuantityFood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinregular"
+                    android:text="Tạm tính (1 món)"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvTmpPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/poppinregular"
+                    android:text="33,500 đ"
+                    android:textSize="11sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:id="@+id/tvDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinregular"
+                    android:text="Phí áp dụng"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvShip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/poppinregular"
+                    android:text="0đ"
+                    android:textSize="11sp" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/grey" />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,7 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppinregular"
-                    android:text="Tổng cộng:"
+                    android:text="Tổng cộng"
                     android:textColor="#000"
                     android:textSize="14sp" />
 
@@ -102,14 +153,22 @@
                     android:textColor="#000"
                     android:textSize="14sp" />
 
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/tvMethod"
+                    android:src="@drawable/money" />
+
                 <TextView
+                    android:id="@+id/tvMethod"
+                    android:textColor="#000"
+                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:fontFamily="@font/poppinregular"
-                    android:text="Tiền mặt"
-                    android:textColor="#000"
-                    android:textSize="13sp" />
+                    android:text="Tiền mặt" />
 
             </RelativeLayout>
 

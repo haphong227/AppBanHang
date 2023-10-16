@@ -18,7 +18,7 @@
             android:layout_marginLeft="10dp"
             android:text="Fast and Delicious\nFood"
             android:textColor="@color/green_400"
-            android:textSize="24sp" />
+            android:textSize="28sp" />
 
         <EditText
             android:id="@+id/eSearch"
@@ -26,11 +26,21 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/searchview"
             android:drawableLeft="@drawable/ic_search"
             android:enabled="true"
             android:fontFamily="@font/poppinregular"
             android:hint="Tìm kiếm món ăn"
             android:imeOptions="actionSearch" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp" />
 
         <TextView
             style="@style/viewParent.headerText"

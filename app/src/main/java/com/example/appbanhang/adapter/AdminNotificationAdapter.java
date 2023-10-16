@@ -35,7 +35,7 @@ public class AdminNotificationAdapter extends RecyclerView.Adapter<AdminNotifica
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
         Bill bill = list.get(position);
-        holder.notification.setText(bill.getName() +" đã đặt đơn hàng "+ bill.getIdBill());
+        holder.notification.setText(bill.getEmail()+ " ("+bill.getName() +") đã đặt đơn hàng "+ bill.getIdBill());
         holder.tvTime.setText(bill.getCurrentTime()+" "+bill.getCurrentDate());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

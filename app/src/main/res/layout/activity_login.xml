@@ -60,7 +60,8 @@
                     app:tabIndicatorColor="@color/green_400"
                     app:tabTextColor="#000"
                     app:tabIndicatorHeight="4dp"
-                    android:background="@drawable/boggoc" app:tabMode="fixed">
+                    android:background="@drawable/boggoc"
+                    app:tabMode="fixed">
                 </com.google.android.material.tabs.TabLayout>
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/viewPager"

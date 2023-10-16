@@ -28,27 +28,37 @@
             app:itemTextColor="@color/navigation" />
     </androidx.appcompat.widget.Toolbar>
 
-       <androidx.viewpager.widget.ViewPager
-           android:id="@+id/viewPager"
-           android:layout_below="@id/toolBar"
-           android:layout_above="@id/nav"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"/>
-<!--    <FrameLayout-->
-<!--        android:id="@+id/fr_l"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_above="@id/nav"-->
-<!--        android:layout_below="@id/toolBar" />-->
+    <!--    <androidx.viewpager.widget.ViewPager-->
+    <!--        android:id="@+id/viewPager"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_above="@id/nav"-->
+    <!--        android:layout_below="@id/toolBar" />-->
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+    <!--        android:id="@+id/nav"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:background="#ffff"-->
+    <!--        android:elevation="10dp"-->
+    <!--        app:itemIconTint="@color/navigation"-->
+    <!--        app:itemTextColor="@color/navigation"-->
+    <!--        app:menu="@menu/navigation" />-->
+    <FrameLayout
+        android:id="@+id/frame"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/nav"
+        android:layout_below="@id/toolBar"/>
+
+    <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#ffff"
-        android:elevation="10dp"
-        app:itemIconTint="@color/navigation"
-        app:itemTextColor="@color/navigation"
-        app:menu="@menu/navigation" />
+        android:elevation="5dp"
+        app:cnb_menuResource="@menu/navigation" />
 </RelativeLayout>

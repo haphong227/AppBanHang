@@ -9,7 +9,7 @@
     </string-array>
     <string-array name="stateOrder">
         <item>Đã xác nhận</item>
-<!--        <item>Đang làm đồ ăn</item>-->
+        <!--        <item>Đang làm đồ ăn</item>-->
         <item>Đang giao hàng</item>
         <item>Đã giao thành công</item>
     </string-array>

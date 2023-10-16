@@ -27,7 +27,7 @@ import java.util.Locale;
 
 public class DetailBillActivity extends AppCompatActivity {
     Toolbar toolbar;
-    TextView titlePage, tvAddress, tvidBill, tvDate, tvPrice, tvName, tvPhone;
+    TextView titlePage, tvAddress, tvidBill, tvDate, tvPrice, tvName, tvPhone, tvTmpPrice, tvShip, tvQuantityFood;
     RecyclerView recyclerView;
     ListFoodAdapter cartAdapter;
     DatabaseReference myRef;
@@ -59,7 +59,8 @@ public class DetailBillActivity extends AppCompatActivity {
         decimalFormat.applyPattern("#,###,###,###");
 
         tvAddress.setText(address);
-        tvPrice.setText(String.valueOf(decimalFormat.format(Double.parseDouble(price)) + " đ"));
+        tvPrice.setText(String.valueOf(decimalFormat.format(Double.parseDouble(price)) + "đ"));
+        tvTmpPrice.setText(String.valueOf(decimalFormat.format(Double.parseDouble(price)) + "đ"));
         tvidBill.setText(idBill);
 
         LinearLayoutManager manager=new LinearLayoutManager(DetailBillActivity.this, RecyclerView.VERTICAL, false);
@@ -77,6 +78,7 @@ public class DetailBillActivity extends AppCompatActivity {
                         name=bill.getName();
                         phone=bill.getPhone();
                         cartAdapter = new ListFoodAdapter(bill.getCartArrayList(), DetailBillActivity.this);
+                        tvQuantityFood.setText("Tạm tính (" + String.valueOf(bill.getCartArrayList().size())+ " món)");
                     }
                 }
                 tvDate.setText(date);
@@ -103,6 +105,9 @@ public class DetailBillActivity extends AppCompatActivity {
         tvDate = findViewById(R.id.tvDate);
         tvName = findViewById(R.id.tvName);
         tvPhone = findViewById(R.id.tvPhone);
+        tvQuantityFood = findViewById(R.id.tvQuantityFood);
+        tvShip = findViewById(R.id.tvShip);
+        tvTmpPrice = findViewById(R.id.tvTmpPrice);
         recyclerView = findViewById(R.id.recycleView_food);
     }
 }
